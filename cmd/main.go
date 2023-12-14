@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/koneal2013/freshstock/internal/api"
+	"github.com/koneal2013/freshstock/internal/model"
 	"github.com/koneal2013/freshstock/internal/store"
 )
 
@@ -18,6 +19,11 @@ func main() {
 	myStore := store.NewProduceStore()
 	handlers := api.NewHandlers(myStore)
 	engine := api.SetupRoutes(handlers)
+
+	err := model.RegisterValidator()
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 
 	srv := &http.Server{
 		Addr:    ":8080",
