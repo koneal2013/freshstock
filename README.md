@@ -28,15 +28,16 @@ Please refer to the `api/routes.go` file for more details.
 
 ## Installation
 
-1. Clone the repository: 
-2. Run `make install`
-3. Run `make run`
+1. Clone the repository:
+2. Run `make run`
 
 Make sure you have set your GOPATH and PATH environments correctly.
 
 ## Makefile Usage
 
 - Compile the project: `make compile`
+- Clean previous builds `make clean`
+- Run tests `make test`
 - Build docker image: `make docker-build`
 - Run docker container: `make docker-run`
 
