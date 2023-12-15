@@ -25,8 +25,11 @@ compile: test
 docker-build: test
 	docker build -t $(DOCKER_IMAGE_NAME) .
 
-docker-run:
+docker-run: docker-build
 	docker run --name $(DOCKER_CONTAINER_NAME) -d -it -p 8080:8080 $(DOCKER_IMAGE_NAME)
+
+docker-down:
+	docker stop $(DOCKER_CONTAINER_NAME) && docker rm $(DOCKER_CONTAINER_NAME)
 
 clean:
 	$(GOCLEAN)
