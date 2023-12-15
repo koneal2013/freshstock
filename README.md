@@ -1,7 +1,7 @@
 # FreshStock
 ## Introduction
 
-FreshStock is a RESTful API server written in Go that uses the net/http package. It provides endpoints for managing produce inventory.
+FreshStock is a RESTful API server written in Go that uses [Gin-gonic's Gin](https://github.com/gin-gonic/gin) web framework. It provides endpoints for managing produce inventory.
 
 ## Prerequisites
 

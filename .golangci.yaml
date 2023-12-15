@@ -82,21 +82,21 @@ output:
 linters:
   # Disable all linters.
   # Default: false
-  disable-all: false
+  disable-all: true
   # Enable specific linter
   # https://golangci-lint.run/usage/linters/#enabled-by-default
 
   # Enable all available linters.
   # Default: false
-  enable-all: true
+  enable-all: false
   # Disable specific linter
   # https://golangci-lint.run/usage/linters/#disabled-by-default
   disable:
-    - ifshort
-    - scopelint
-    - nosnakecase
   # Enable presets.
   # https://golangci-lint.run/usage/linters
+  enable:
+    - errcheck
+    - unused
   presets:
   # Run only fast linters from enabled linters set (first run won't be fast)
   # Default: false
