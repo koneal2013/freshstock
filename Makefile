@@ -38,5 +38,5 @@ clean:
 test:
 	$(GOTEST) -v ./...
 
-run: compile
+run: compile test
 	./bin/$(APP_NAME)
