@@ -18,7 +18,7 @@ BUILD_DIRS=$(OUT_DIR)
 
 all: test compile
 
-compile: test
+compile:
 	mkdir -p $(BUILD_DIRS)
 	$(GOBUILD) -o $(OUT_DIR)/$(APP_NAME) ./cmd
 
