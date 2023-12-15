@@ -8,7 +8,6 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
@@ -31,12 +30,7 @@ func TestHandlers(t *testing.T) {
 	require.NoError(t, err)
 
 	h := api.NewHandlers(testStore)
-	r := gin.Default()
-
-	r.POST("/addProduce", h.AddProduce)
-	r.GET("/getProduceByCode/:code", h.GetProduceByCode)
-	r.GET("/searchProduce", h.SearchProduce)
-	r.DELETE("/deleteProduce/:code", h.DeleteProduce)
+	r := api.SetupRoutes(h)
 
 	tests := []struct {
 		name   string
@@ -44,13 +38,13 @@ func TestHandlers(t *testing.T) {
 		body   []byte
 		method string
 	}{
-		{name: "add produce", path: "/addProduce", body: testProduceBytes,
+		{name: "add produce", path: "/produce/", body: testProduceBytes,
 			method: http.MethodPost},
-		{name: "get produce by code", path: fmt.Sprintf("/getProduceByCode/%s", testProduce.Code),
+		{name: "get produce by code", path: fmt.Sprintf("/produce/%s", testProduce.Code),
 			method: http.MethodGet},
-		{name: "search produce", path: fmt.Sprintf("/searchProduce?q=%s", testProduce.Name),
+		{name: "search produce", path: fmt.Sprintf("/produce/?q=%s", testProduce.Name),
 			method: http.MethodGet},
-		{name: "delete produce", path: fmt.Sprintf("/deleteProduce/%s", testProduce.Code),
+		{name: "delete produce", path: fmt.Sprintf("/produce/%s", testProduce.Code),
 			method: http.MethodDelete},
 	}
 

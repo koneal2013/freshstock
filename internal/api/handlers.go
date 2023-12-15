@@ -47,7 +47,11 @@ func (h *Handlers) GetProduceByCode(c *gin.Context) {
 func (h *Handlers) SearchProduce(c *gin.Context) {
 	query := c.Query("q")
 
-	results := h.store.SearchProduce(query)
+	results, err := h.store.SearchProduce(query)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
 	c.JSON(http.StatusOK, results)
 }
 

@@ -58,7 +58,7 @@ func (s *ProduceStore) GetProduceByCode(code string) (*model.Produce, error) {
 }
 
 // SearchProduce searches for produce by name or code and returns the matching results.
-func (s *ProduceStore) SearchProduce(query string) []*model.Produce {
+func (s *ProduceStore) SearchProduce(query string) ([]*model.Produce, error) {
 	s.RLock()
 	defer s.RUnlock()
 
@@ -69,7 +69,11 @@ func (s *ProduceStore) SearchProduce(query string) []*model.Produce {
 		}
 	}
 
-	return results
+	if results == nil {
+		return nil, ErrProduceNotFound
+	}
+
+	return results, nil
 }
 
 // DeleteProduce deletes a produce item from the store based on its code
