@@ -5,7 +5,7 @@ FreshStock is a RESTful API server written in Go that uses the net/http package.
 
 ## Prerequisites
 
-- Go `1.21`
+- Go `1.21.5`
 - Docker (make sure docker commands do not need sudo)
 
 ## Endpoints
