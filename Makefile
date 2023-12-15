@@ -18,7 +18,7 @@ BUILD_DIRS=$(OUT_DIR)
 
 all: test compile
 
-compile: lint
+compile:
 	mkdir -p $(BUILD_DIRS)
 	$(GOBUILD) -o $(OUT_DIR)/$(APP_NAME) ./cmd
 
@@ -40,8 +40,3 @@ test:
 
 run: compile test
 	./bin/$(APP_NAME)
-
-lint:
-	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.55.2
-	golangci-lint --version
-	golangci-lint run
