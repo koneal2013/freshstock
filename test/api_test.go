@@ -32,10 +32,10 @@ func TestHandlers(t *testing.T) {
 		body   []byte
 		method string
 	}{
-		{name: "add produce", path: "/produce/", body: []byte(testProduce), method: http.MethodPost},
-		{name: "get produce by code", path: "/produce/A12T-4GH7-QPL9-3N4M", method: http.MethodGet},
-		{name: "search produce", path: "/produce/?q=let", method: http.MethodGet},
-		{name: "delete produce", path: "/produce/A12T-4GH7-QPL9-3N4M", method: http.MethodDelete},
+		{name: "add produce", path: "/api/v1/produce/", body: []byte(testProduce), method: http.MethodPost},
+		{name: "get produce by code", path: "/api/v1/produce/A12T-4GH7-QPL9-3N4M", method: http.MethodGet},
+		{name: "search produce", path: "/api/v1/produce/?q=let", method: http.MethodGet},
+		{name: "delete produce", path: "/api/v1/produce/A12T-4GH7-QPL9-3N4M", method: http.MethodDelete},
 	}
 
 	for _, test := range tests {
