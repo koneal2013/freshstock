@@ -1,11 +1,13 @@
 # FreshStock
+
 ## Introduction
 
-FreshStock is a RESTful API server written in Go that uses [Gin-gonic's Gin](https://github.com/gin-gonic/gin) web framework. It provides endpoints for managing produce inventory.
+FreshStock is a RESTful API server written in Go that uses [Gin-gonic's Gin](https://github.com/gin-gonic/gin) web framework. It provides endpoints for managing produce inventory. A simple React UI is included for interacting with the API.
 
 ## Prerequisites
 
 - Go `1.21.5`
+- Node.js (for the UI)
 - Docker (make sure docker commands do not need sudo)
 
 ## Endpoints
@@ -24,23 +26,54 @@ FreshStock is a RESTful API server written in Go that uses [Gin-gonic's Gin](htt
 
 - `/api/v1/produce/:code` Remove produce from stock.
 
-Please refer to the `api/routes.go` file for more details.
+Please refer to the `internal/api/routes.go` file for more details.
 
-## Installation
+## Installation & Usage
+
+### Backend (API)
 
 1. Clone the repository:
-2. Run `make run`
+2. Run `make run` to start the API server locally.
     - Alternatively, you can run the API in a docker container with `make docker-run`.
 3. The API server will be listening on port `8080`.
 4. Run `make docker-down` to stop and remove the docker container.
 
-Make sure you have set your GOPATH and PATH environments correctly.
+### Frontend (React UI)
+
+1. Navigate to the `ui` directory:
+   ```sh
+   cd ui
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Start the development server:
+   ```sh
+   npm run dev
+   ```
+4. Open your browser and go to the URL shown in the terminal (usually `http://localhost:5173`).
+5. The UI will interact with the API at `http://localhost:8080/api/v1/produce` by default.
+
+## Features of the React UI
+
+- List all produce in inventory
+- Search produce by name
+- Add new produce (code, name, unit price)
+- Delete produce by code
+- Error handling and loading indicators
+
+## Notes
+
+- Make sure the backend API is running before using the UI.
+- CORS is enabled by default in the backend for development.
+- All produce data is stored in memory and will be lost when the server restarts.
 
 ## Makefile Usage
 
 - Compile the project: `make compile`.
-- Clean previous builds `make clean`.
-- Run tests `make test`.
+- Clean previous builds: `make clean`.
+- Run tests: `make test`.
 - Build docker image: `make docker-build`.
 - Run docker container: `make docker-run`.
 
@@ -48,11 +81,8 @@ For more details, please refer to the Makefile.
 
 ## Assumptions
 
-While developing this program, several assumptions were made, particularly in the areas of input validation and error handling:
-
-1. Input Validation: It was assumed that all incoming data would be in the form of JSON and that the client would provide all the necessary fields (name, code, and unit price) when adding a new produce item. The program expects the produce code to be a string of alphanumeric characters and hyphens, the name to be an alphanumeric string, and the unit price to be a number with up to two decimal places. If these conditions are not met, the program will return an error. It was also assumed that the client would provide a valid produce code when fetching or deleting a produce item, and a valid query string when searching the produce inventory.
-2. Error Handling: The program assumes that errors may occur during the processing of requests, such as when a client tries to add a produce item with a code that already exists in the inventory, or when a client tries to fetch or delete a produce item that does not exist. In such cases, the program will return an appropriate HTTP status code and a JSON response with an error message. It was also assumed that the program may receive invalid JSON or malformed requests, in which case it will return a 400 Bad Request status code and an error message.
-3. Concurrency: The program assumes that multiple clients may try to read from or write to the produce inventory concurrently. To handle this, the program uses a read-write mutex to synchronize access to the inventory. This allows multiple concurrent reads for high throughput, while ensuring that writes (additions and deletions) are atomic and consistent.
-4. In-Memory Storage: The program assumes that the produce inventory can be stored in memory for the lifetime of the program. This means that all produce data will be lost when the program is terminated.
-5. RESTful API: The program assumes that the client is familiar with the principles of REST and will use the appropriate HTTP methods (GET, POST, DELETE) to interact with the API. The program uses standard HTTP status codes to indicate the success or failure of a request, and it assumes that the client will check these status codes and handle them appropriately.
+- All incoming data is JSON and must include code, name, and unit price.
+- The produce code is a string of alphanumeric characters and hyphens, name is alphanumeric, and unit price is a number with up to two decimal places.
+- Errors are returned as JSON with an error message and appropriate HTTP status code.
+- The API is RESTful and uses standard HTTP methods and status codes.
 
